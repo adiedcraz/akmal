@@ -45,6 +45,7 @@ class Program {
 
   String get startDateFormat => DateFormat('d MMM y').format(startDate!);
   String get endDateFormat => DateFormat('d MMM y').format(endDate!);
+  String get startTimeFormat => DateFormat('jm').format(startDate!);
 
   String get date {
     final startDay = DateTime(
@@ -52,9 +53,14 @@ class Program {
       startDate!.month,
       startDate!.day,
     );
+
     final endDay = DateTime(endDate!.year, endDate!.month, endDate!.day);
     final isSameDay = startDay.isAtSameMomentAs(endDay);
     if (isSameDay) return startDateFormat;
-    return '${DateFormat('d').format(startDate!)} to $endDateFormat';
+    return '${DateFormat('d').format(startDate!)} hingga $endDateFormat';
+  }
+
+  String get time {
+    return startTimeFormat;
   }
 }

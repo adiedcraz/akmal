@@ -15,6 +15,20 @@ class HomeView extends GetView<HomeController> {
             snap: false,
             floating: true,
             expandedHeight: 160.0,
+            actions: [
+              IconButton(
+                onPressed: controller.logout,
+                icon: Icon(Icons.logout),
+              ),
+              IconButton(
+                onPressed: controller.qrscanner,
+                icon: Icon(Icons.qr_code),
+              ),
+              IconButton(
+                onPressed: controller.getImage,
+                icon: Icon(Icons.image),
+              ),
+            ],
             flexibleSpace: FlexibleSpaceBar(
               background: Image.asset(
                 'assets/images/bg2.jpg',
