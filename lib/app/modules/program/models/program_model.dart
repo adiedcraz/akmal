@@ -2,11 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 
 class Program {
-  String? title;
-  DateTime? startDate;
+  List<String>? coordinator;
   DateTime? endDate;
   String? location;
-  List<String>? coordinator;
+  DateTime? startDate;
+  String? title;
 
   Program(
       {this.title,
@@ -43,24 +43,56 @@ class Program {
     return data;
   }
 
-  String get startDateFormat => DateFormat('d MMM y').format(startDate!);
-  String get endDateFormat => DateFormat('d MMM y').format(endDate!);
-  String get startTimeFormat => DateFormat('jm').format(startDate!);
+String get startDateFormatted => DateFormat('d MMM y').format(startDate!);
+  String get endDateFormatted => DateFormat('d MMM y').format(endDate!);
+  String get timeStart => DateFormat('jm').format(startDate!);
+  String get timeEnd => DateFormat('jm').format(endDate!);
+  String get dayWeekStart => DateFormat('EEE').format(startDate!);
+  String get dayStart => DateFormat('dd').format(startDate!);
 
   String get date {
+    if (isSameDay) return startDateFormatted;
+    return '${DateFormat('d').format(startDate!)} hingga $endDateFormatted';
+  }
+
+  String get time {
+    return '$timeStart - $timeEnd';
+  }
+
+  bool get isSameDay {
     final startDay = DateTime(
       startDate!.year,
       startDate!.month,
       startDate!.day,
     );
-
-    final endDay = DateTime(endDate!.year, endDate!.month, endDate!.day);
-    final isSameDay = startDay.isAtSameMomentAs(endDay);
-    if (isSameDay) return startDateFormat;
-    return '${DateFormat('d').format(startDate!)} hingga $endDateFormat';
+    final endDay = DateTime(
+      endDate!.year,
+      endDate!.month,
+      endDate!.day,
+    );
+    return startDay.isAtSameMomentAs(endDay);
   }
 
-  String get time {
-    return startTimeFormat;
-  }
+  String get description => 'Bermula pada $date ($time) di $location';
 }
+  // String get startDateFormat => DateFormat('d MMM y').format(startDate!);
+  // String get endDateFormat => DateFormat('d MMM y').format(endDate!);
+  // String get startTimeFormat => DateFormat('jm').format(startDate!);
+
+  // String get date {
+  //   final startDay = DateTime(
+  //     startDate!.year,
+  //     startDate!.month,
+  //     startDate!.day,
+  //   );
+
+  //   final endDay = DateTime(endDate!.year, endDate!.month, endDate!.day);
+  //   final isSameDay = startDay.isAtSameMomentAs(endDay);
+  //   if (isSameDay) return startDateFormat;
+  //   return '${DateFormat('d').format(startDate!)} hingga $endDateFormat';
+  // }
+
+  // String get time {
+  //   return startTimeFormat;
+  // }
+
